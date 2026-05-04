@@ -10,19 +10,19 @@ const AddTransaction = ({ refresh }) => {
   });
 
   const submit = async (e) => {
-    e.preventDefault();
-    if (!form.title || !form.amount) return;
+  e.preventDefault();
+  if (!form.title || !form.amount) return;
 
-    await axios.post("`${import.meta.env.VITE_API_URL}/api/transactions`", {
-      title: form.title,
-      amount: Number(form.amount),
-      category: form.category,
-      type: "expense",
-    });
+  await axios.post("https://ai-finance-tracker-8aqe.onrender.com/api/transactions", {
+    title: form.title,
+    amount: Number(form.amount),
+    category: form.category,
+    type: "expense",
+  });
 
-    setForm({ title: "", amount: "", category: "Food" });
-    refresh();
-  };
+  setForm({ title: "", amount: "", category: "Food" });
+  refresh();
+};
 
   return (
     <Box

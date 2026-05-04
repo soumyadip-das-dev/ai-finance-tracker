@@ -87,7 +87,7 @@ const CATEGORY_META = {
 };
 
 const CATEGORIES = Object.keys(CATEGORY_META);
-const API = `${import.meta.env.VITE_API_URL}/api/transactions`;
+const API = "https://ai-finance-tracker-8aqe.onrender.com/api/transactions";
 
 // ─── Global CSS (injected once) ───────────────────────────────────────────────
 
