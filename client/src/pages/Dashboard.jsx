@@ -87,7 +87,7 @@ const CATEGORY_META = {
 };
 
 const CATEGORIES = Object.keys(CATEGORY_META);
-const API = "http://localhost:5000/api/transactions";
+const API = `${import.meta.env.VITE_API_URL}/api/transactions`;
 
 // ─── Global CSS (injected once) ───────────────────────────────────────────────
 

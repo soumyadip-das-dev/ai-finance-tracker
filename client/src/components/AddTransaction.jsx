@@ -13,7 +13,7 @@ const AddTransaction = ({ refresh }) => {
     e.preventDefault();
     if (!form.title || !form.amount) return;
 
-    await axios.post("http://localhost:5000/api/transactions", {
+    await axios.post("`${import.meta.env.VITE_API_URL}/api/transactions`", {
       title: form.title,
       amount: Number(form.amount),
       category: form.category,
