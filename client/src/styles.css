@@ -1,0 +1,170 @@
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: #0f172a;
+  color: white;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+  background: #1e293b;
+  padding: 15px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* Cards */
+.card-container {
+  display: flex;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.card {
+  flex: 1;
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.green { color: #22c55e; }
+.red { color: #ef4444; }
+.yellow { color: #facc15; }
+
+/* Grid */
+.grid {
+  display: flex;
+  gap: 20px;
+}
+
+/* Form */
+.form {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.form input, .form select {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  background: #334155;
+  color: white;
+}
+
+.form button {
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.form button:hover {
+  background: #4f46e5;
+}
+
+/* Transactions */
+.transactions {
+  background: #1e293b;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.tx-item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #334155;
+  padding: 10px 0;
+}
+
+/* AI Box */
+.ai-box {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.tx-item button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.tx-item button:hover {
+  transform: scale(1.2);
+}
+
+/* Fade In Page */
+.fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Card Hover Lift */
+.card {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+/* Button Click Animation */
+button {
+  transition: all 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* Transaction Entry Animation */
+.tx-item:hover {
+  background: #334155;
+  border-radius: 6px;
+  padding-left: 5px;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Input Focus Glow */
+input:focus, select:focus {
+  box-shadow: 0 0 5px #6366f1;
+}
