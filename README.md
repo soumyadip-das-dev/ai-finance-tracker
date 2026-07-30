@@ -24,10 +24,6 @@ designed with a modern fintech aesthetic and deployed on cloud infrastructure.
 
 </div>
 
-## 🖼️ Preview
-
-> *(Screenshots coming soon — add dashboard.png, chart.png, add.png to `docs/screenshots/`)*
-
 ```
 📁 docs/screenshots/
     ├── dashboard.png     ← Main dashboard view
