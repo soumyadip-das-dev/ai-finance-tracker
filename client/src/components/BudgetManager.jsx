@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../api/axios";
 
 const CATEGORIES = ["Food","Travel","Shopping","Bills","Health","Entertainment","Other"];
 
@@ -8,7 +8,7 @@ export default function BudgetManager() {
   const [form, setForm] = useState({ category: "Food", limit: "" });
 
   const fetchBudgets = async () => {
-    const { data } = await axios.get("/api/budgets");
+    const { data } = await axios.get("/budgets");
     setBudgets(data);
   };
 
@@ -16,13 +16,13 @@ export default function BudgetManager() {
 
   const save = async (e) => {
     e.preventDefault();
-    await axios.post("/api/budgets", form);
+    await axios.post("/budgets", form);
     setForm({ category: "Food", limit: "" });
     fetchBudgets();
   };
 
   const remove = async (id) => {
-    await axios.delete(`/api/budgets/${id}`);
+    await axios.delete(`/budgets/${id}`);
     fetchBudgets();
   };
 

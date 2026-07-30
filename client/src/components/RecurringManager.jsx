@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../api/axios";
 import { format } from "date-fns";
 
 const CATEGORIES = ["Food","Travel","Shopping","Bills","Health","Entertainment","Other"];
@@ -10,7 +10,7 @@ export default function RecurringManager() {
   const [form, setForm] = useState({ title: "", amount: "", type: "expense", category: "Bills", frequency: "monthly" });
 
   const fetch = async () => {
-    const { data } = await axios.get("/api/recurring");
+    const { data } = await axios.get("/recurring");
     setItems(data);
   };
 
@@ -18,7 +18,7 @@ export default function RecurringManager() {
 
   const add = async (e) => {
     e.preventDefault();
-    await axios.post("/api/recurring", form);
+    await axios.post("/recurring", form);
     setForm({ title: "", amount: "", type: "expense", category: "Bills", frequency: "monthly" });
     fetch();
   };
@@ -78,13 +78,13 @@ export default function RecurringManager() {
                 ₹{item.amount.toLocaleString()}
               </span>
               <button
-                onClick={async () => { await axios.patch(`/api/recurring/${item._id}/toggle`); fetch(); }}
+                onClick={async () => { await axios.patch(`/recurring/${item._id}/toggle`); fetch(); }}
                 className={`text-xs px-2 py-1 rounded-lg ${item.active ? "bg-income/20 text-income" : "bg-gray-700 text-gray-400"}`}
               >
                 {item.active ? "Active" : "Paused"}
               </button>
               <button
-                onClick={async () => { await axios.delete(`/api/recurring/${item._id}`); fetch(); }}
+                onClick={async () => { await axios.delete(`/recurring/${item._id}`); fetch(); }}
                 className="text-gray-600 hover:text-red-400 text-xs"
               >✕</button>
             </div>

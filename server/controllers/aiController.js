@@ -29,7 +29,10 @@ export const analyzeSpending = async (req, res) => {
       `${b.category}: limit ₹${b.limit}`
     ).join(", ");
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-flash",
+      generationConfig: { responseMimeType: "application/json" }
+    });
 
     const prompt = `You are a smart personal finance advisor. Analyze this user's spending data:
 
@@ -38,7 +41,7 @@ ${txSummary || "No transactions yet"}
 
 BUDGET LIMITS: ${budgetSummary || "No budgets set"}
 
-Respond ONLY with a valid JSON object (no markdown, no backticks):
+Respond ONLY with a valid JSON object matching this schema:
 {
   "score": <number 0-100 budget health score>,
   "summary": "<2 sentence overall analysis>",
@@ -51,7 +54,7 @@ Respond ONLY with a valid JSON object (no markdown, no backticks):
 
     const result = await model.generateContent(prompt);
     const text = result.response.text().trim();
-    const json = JSON.parse(text.replace(/```json|```/g, "").trim());
+    const json = JSON.parse(text);
     res.json(json);
   } catch (err) {
     console.error("Gemini error:", err);

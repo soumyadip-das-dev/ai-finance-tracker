@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import axios from "../api/axios";
 import { Box, TextField, MenuItem, Button } from "@mui/material";
 
 const AddTransaction = ({ refresh }) => {
@@ -8,21 +8,40 @@ const AddTransaction = ({ refresh }) => {
     amount: "",
     category: "Food",
   });
-
+  
   const submit = async (e) => {
+
   e.preventDefault();
+
   if (!form.title || !form.amount) return;
 
-  await axios.post("https://ai-finance-tracker-8aqe.onrender.com/api/transactions", {
-    title: form.title,
-    amount: Number(form.amount),
-    category: form.category,
-    type: "expense",
-  });
+  try {
 
-  setForm({ title: "", amount: "", category: "Food" });
-  refresh();
+    await axios.post(
+      "/transactions",
+      {
+        title: form.title,
+        amount: Number(form.amount),
+        category: form.category,
+        type: "expense",
+      }
+    );
+
+    setForm({
+      title: "",
+      amount: "",
+      category: "Food",
+    });
+
+    refresh();
+
+  } catch (err) {
+
+    console.error(err);
+
+  }
 };
+
 
   return (
     <Box

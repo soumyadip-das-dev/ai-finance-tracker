@@ -1,36 +1,38 @@
 import express from "express";
-import Transaction from "../models/Transaction.js";
+
+import {
+  getTransactions,
+  addTransaction,
+  deleteTransaction,
+  updateTransaction,
+} from "../controllers/transactionController.js";
+
+import { protect } from "../middleware/auth.js";
 
 const router = express.Router();
 
-// GET
-router.get("/", async (req, res) => {
-  const data = await Transaction.find().sort({ createdAt: -1 });
-  res.json(data);
-});
+/**
+ * @route   GET /api/transactions
+ * @desc    Get user transactions
+ */
+router.get("/", protect, getTransactions);
 
-// POST
-router.post("/", async (req, res) => {
-  const newTx = new Transaction(req.body);
-  const saved = await newTx.save();
-  res.json(saved);
-});
+/**
+ * @route   POST /api/transactions
+ * @desc    Create transaction
+ */
+router.post("/", protect, addTransaction);
 
-// DELETE
-router.delete("/:id", async (req, res) => {
-  await Transaction.findByIdAndDelete(req.params.id);
-  res.json({ message: "Deleted" });
-});
+/**
+ * @route   PUT /api/transactions/:id
+ * @desc    Update transaction
+ */
+router.put("/:id", protect, updateTransaction);
 
-// UPDATE
-router.put("/:id", async (req, res) => {
-  const updated = await Transaction.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    { new: true }
-  );
-
-  res.json(updated);
-});
+/**
+ * @route   DELETE /api/transactions/:id
+ * @desc    Delete transaction
+ */
+router.delete("/:id", protect, deleteTransaction);
 
 export default router;

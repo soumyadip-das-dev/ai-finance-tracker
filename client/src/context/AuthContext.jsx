@@ -1,34 +1,39 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
+import { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
-axios.defaults.baseURL = "http://localhost:5000";
 
-export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const stored = localStorage.getItem("financeUser");
-    if (stored) {
-      const u = JSON.parse(stored);
-      setUser(u);
-      axios.defaults.headers.common["Authorization"] = `Bearer ${u.token}`;
-    }
-  }, []);
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || null
+  );
 
   const login = (userData) => {
-    localStorage.setItem("financeUser", JSON.stringify(userData));
-    axios.defaults.headers.common["Authorization"] = `Bearer ${userData.token}`;
+    localStorage.setItem(
+      "user",
+      JSON.stringify(userData)
+    );
+
     setUser(userData);
   };
 
   const logout = () => {
-    localStorage.removeItem("financeUser");
-    delete axios.defaults.headers.common["Authorization"];
+    localStorage.removeItem("user");
     setUser(null);
   };
 
-  return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>;
-}
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        login,
+        logout,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  return useContext(AuthContext);
+};

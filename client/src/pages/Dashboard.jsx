@@ -18,7 +18,7 @@ import {
   createContext,
   useContext,
 } from "react";
-import axios from "axios";
+import API from "../api/axios";
 import {
   Box,
   Grid,
@@ -87,7 +87,6 @@ const CATEGORY_META = {
 };
 
 const CATEGORIES = Object.keys(CATEGORY_META);
-const API = "https://ai-finance-tracker-8aqe.onrender.com/api/transactions";
 
 // ─── Global CSS (injected once) ───────────────────────────────────────────────
 
@@ -226,60 +225,154 @@ const useToast = () => {
 };
 
 const useTransactions = (showToast) => {
+  
   const [transactions, setTransactions] = useState([]);
+
   const [loading, setLoading] = useState(true);
+
   const abortRef = useRef(null);
 
+  // ── Fetch Transactions ───────────────────
   const fetchData = useCallback(async () => {
+
     abortRef.current?.abort();
+
     abortRef.current = new AbortController();
+
     try {
-      const { data } = await axios.get(API, { signal: abortRef.current.signal });
-      const sorted = [...data].sort((a, b) =>
-        a.date && b.date ? new Date(b.date) - new Date(a.date) : 0
+
+      setLoading(true);
+
+      // ✅ AUTHENTICATED REQUEST
+      const { data } = await API.get(
+        "/transactions",
+        {
+          signal: abortRef.current.signal,
+        }
       );
+
+      // Sort newest first
+      const sorted = [...data].sort((a, b) =>
+        a.createdAt && b.createdAt
+          ? new Date(b.createdAt) -
+            new Date(a.createdAt)
+          : 0
+      );
+
       setTransactions(sorted);
+
     } catch (err) {
-      if (!axios.isCancel(err)) showToast("Failed to load transactions", "error");
+
+      // Ignore canceled requests
+      if (err.name !== "CanceledError") {
+
+        console.error(err);
+
+        showToast(
+          "Failed to load transactions",
+          "error"
+        );
+      }
+
     } finally {
+
       setLoading(false);
+
     }
+
   }, [showToast]);
 
+  // Initial fetch
   useEffect(() => {
+
     fetchData();
+
     return () => abortRef.current?.abort();
+
   }, [fetchData]);
 
+  // ── Delete Transaction ───────────────────
   const remove = useCallback(async (id) => {
-    // Optimistic
-    setTransactions((prev) => prev.filter((t) => t._id !== id));
+
+    // Optimistic UI
+    setTransactions((prev) =>
+      prev.filter((t) => t._id !== id)
+    );
+
     try {
-      await axios.delete(`${API}/${id}`);
+
+      // ✅ AUTHENTICATED REQUEST
+      await API.delete(
+        `/transactions/${id}`
+      );
+
       showToast("Transaction removed");
-    } catch {
-      showToast("Failed to delete — refreshing", "error");
+
+    } catch (err) {
+
+      console.error(err);
+
+      showToast(
+        "Failed to delete — refreshing",
+        "error"
+      );
+
       fetchData();
     }
+
   }, [showToast, fetchData]);
 
+  // ── Update Transaction ───────────────────
   const update = useCallback(async (id, form) => {
+
     try {
-      const { data } = await axios.put(`${API}/${id}`, {
-        ...transactions.find((t) => t._id === id),
-        ...form,
-        amount: Number(form.amount),
-      });
-      setTransactions((prev) => prev.map((t) => (t._id === id ? data : t)));
+
+      // Existing transaction
+      const existing = transactions.find(
+        (t) => t._id === id
+      );
+
+      // ✅ AUTHENTICATED REQUEST
+      const { data } = await API.put(
+        `/transactions/${id}`,
+        {
+          ...existing,
+          ...form,
+          amount: Number(form.amount),
+        }
+      );
+
+      setTransactions((prev) =>
+        prev.map((t) =>
+          t._id === id ? data : t
+        )
+      );
+
       showToast("Changes saved");
+
       return true;
-    } catch {
-      showToast("Failed to update", "error");
+
+    } catch (err) {
+
+      console.error(err);
+
+      showToast(
+        "Failed to update",
+        "error"
+      );
+
       return false;
     }
+
   }, [transactions, showToast]);
 
-  return { transactions, loading, fetchData, remove, update };
+  return {
+    transactions,
+    loading,
+    fetchData,
+    remove,
+    update,
+  };
 };
 
 // ─── Animated Number ──────────────────────────────────────────────────────────
