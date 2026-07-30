@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="https://img.shields.io/badge/Status-Live%20%26%20Deployed-00C896?style=for-the-badge&logo=vercel&logoColor=white" />
 <img src="https://img.shields.io/badge/Stack-MERN-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
-<img src="https://img.shields.io/badge/AI-Powered%20Insights-FF6B6B?style=for-the-badge&logo=openai&logoColor=white" />
+<img src="https://img.shields.io/badge/AI-Gemini%20Powered-4285F4?style=for-the-badge&logo=google&logoColor=white" />
+<img src="https://img.shields.io/badge/Auth-JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" />
 <img src="https://img.shields.io/badge/License-MIT-blue?style=for-the-badge" />
 
 <br /><br />
@@ -11,12 +11,11 @@
 
 ### *Where your money finally starts making sense.*
 
-**A production-grade, AI-enhanced personal finance dashboard** built with the MERN stack —
-designed with a modern fintech aesthetic and deployed on cloud infrastructure.
+A full-stack personal finance dashboard powered by **Google Gemini AI** — built with the MERN stack, featuring JWT authentication, budget management, recurring transactions, and intelligent AI-driven insights.
 
 <br />
 
-[🌐 Live Demo](https://ai-finance-tracker.vercel.app) &nbsp;|&nbsp; [🔗 Backend API](https://ai-finance-tracker-8aqe.onrender.com) &nbsp;|&nbsp; [📁 Source Code](https://github.com/soumyadip-das-dev/ai-finance-tracker)
+[📁 Source Code](https://github.com/soumyadip-das-dev/ai-finance-tracker)
 
 <br />
 
@@ -24,47 +23,36 @@ designed with a modern fintech aesthetic and deployed on cloud infrastructure.
 
 </div>
 
-```
-📁 docs/screenshots/
-    ├── dashboard.png     ← Main dashboard view
-    ├── chart.png         ← Category analytics chart
-    └── add.png           ← Add transaction UI
-```
+## ✨ Features
 
----
+### 🔐 Authentication
+- Secure **JWT-based** login & registration
+- Protected routes — dashboard is inaccessible without a valid token
+- Persistent sessions via `localStorage`
 
-## ✨ Why This Project Stands Out
-
-> Most expense trackers are CRUD apps with a table. This is not that.
-
-This project was built around three core convictions:
-
-| Conviction | What it means in practice |
-|---|---|
-| 🧠 **Insight > Storage** | Data is displayed *and* interpreted — the app tells you what it means |
-| 🎨 **UX is a feature** | Smooth animations, instant updates, and a Stripe-grade UI make it feel real |
-| 🏗️ **Architecture scales** | JWT auth, LLM integration, and forecasting are drop-in additions — not afterthoughts |
-
----
-
-## 🚀 Core Features
-
-### 💳 Expense Management
-- Add and delete transactions with **instant UI updates** (no page reloads)
+### 💳 Transaction Management
+- Add and delete transactions with **instant UI updates**
 - Categorized spending: Food, Travel, Bills, Entertainment, and more
 - Real-time balance and spending totals
 
 ### 📊 Analytics Dashboard
-- Total spending overview at a glance
-- **Category-wise distribution** with interactive charts
-- Automatic **top spending category detection**
-- Clean, scannable visual hierarchy inspired by Stripe and Linear
+- Category-wise spending breakdown with interactive charts
+- Total income vs expense overview
+- Top spending category detection
 
-### 🧠 AI Insights Engine *(Rule-Based → LLM-Ready)*
-- Intelligent spending pattern analysis
-- High-expense category flagging
-- Actionable financial suggestions
-- Architected to plug in GPT-4/Claude with minimal refactoring
+### 🧠 Gemini AI Insights
+- AI-powered financial analysis using **Google Gemini**
+- Personalized spending summaries and savings suggestions
+- Natural language insights from your transaction history
+
+### 📅 Budget Management
+- Set monthly budgets per category
+- Track budget utilization in real-time
+- Alerts when nearing or exceeding limits
+
+### 🔁 Recurring Transactions
+- Schedule recurring income or expenses (daily, weekly, monthly)
+- Auto-applied via a background cron job on the server
 
 ---
 
@@ -76,25 +64,28 @@ This project was built around three core convictions:
 
 **Frontend**
 - ⚛️ React (Vite)
-- 🎨 Material UI
+- 🎨 Material UI v5
+- 💨 Tailwind CSS v4
 - 🔗 Axios
-- ⚡ `useMemo` + Custom Hooks
+- 🧭 React Router v6
 
 </td>
 <td valign="top" width="33%">
 
 **Backend**
-- 🟢 Node.js
-- 🚂 Express.js
-- 🍃 MongoDB Atlas
+- 🟢 Node.js + Express v5
+- 🍃 MongoDB Atlas + Mongoose
+- 🔑 JWT + bcryptjs
+- ⏱️ node-cron (recurring jobs)
+- 🤖 Google Generative AI SDK
 
 </td>
 <td valign="top" width="33%">
 
-**DevOps**
-- ▲ Vercel (Frontend)
-- 🖥️ Render (Backend)
-- ☁️ MongoDB Atlas (DB)
+**Infrastructure**
+- ☁️ MongoDB Atlas (Database)
+- 🌐 Vite dev server (Frontend)
+- 🖥️ Nodemon (Backend)
 
 </td>
 </tr>
@@ -106,34 +97,38 @@ This project was built around three core convictions:
 
 ### Prerequisites
 - Node.js v18+
-- MongoDB Atlas account (or local MongoDB)
+- MongoDB Atlas account (free tier works)
+- Google Gemini API key — [get one here](https://aistudio.google.com/app/apikey)
 
-### 1️⃣ Clone the Repository
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/soumyadip-das-dev/ai-finance-tracker.git
 cd ai-finance-tracker
 ```
 
-### 2️⃣ Backend Setup
+### 2. Backend Setup
 ```bash
 cd server
 npm install
 ```
 
-Create a `.env` file in `/server`:
+Create a `.env` file inside `/server`:
 ```env
-MONGO_URI=your_mongodb_connection_string
+MONGO_URI=your_mongodb_atlas_connection_string
 JWT_SECRET=your_jwt_secret_key
+GEMINI_API_KEY=your_google_gemini_api_key
 PORT=5000
 ```
 
-Start the server:
+> **MongoDB Atlas**: Go to **Network Access** → Add your current IP (or `0.0.0.0/0` for development).
+
+Start the backend:
 ```bash
-npm start
+npm run dev
 # Server running at http://localhost:5000
 ```
 
-### 3️⃣ Frontend Setup
+### 3. Frontend Setup
 ```bash
 cd client
 npm install
@@ -143,41 +138,55 @@ npm run dev
 
 ---
 
-## 📐 Architecture Overview
+## 📐 Project Structure
 
 ```
 ai-finance-tracker/
-├── client/                  # React + Vite Frontend
-│   ├── src/
-│   │   ├── components/      # Reusable UI components
-│   │   ├── hooks/           # Custom React hooks
-│   │   ├── pages/           # Route-level views
-│   │   └── utils/           # Helpers & AI insight logic
-│   └── vite.config.js
+├── client/                     # React + Vite Frontend
+│   └── src/
+│       ├── api/                # Axios instance & interceptors
+│       ├── components/         # Navbar, BudgetManager, RecurringManager
+│       ├── context/            # AuthContext (JWT session)
+│       ├── pages/              # Login, Register, Dashboard
+│       └── index.css           # Tailwind CSS v4 entry
 │
-├── server/                  # Node.js + Express Backend
-│   ├── models/              # Mongoose schemas
-│   ├── routes/              # API endpoints
-│   ├── controllers/         # Business logic
-│   └── index.js
-│
-└── docs/
-    └── screenshots/         # UI previews
+└── server/                     # Node.js + Express Backend
+    ├── controllers/            # Business logic (auth, transactions, AI)
+    ├── middleware/             # JWT auth middleware
+    ├── models/                 # Mongoose schemas
+    ├── routes/                 # API route definitions
+    └── server.js               # Entry point + cron jobs
 ```
+
+---
+
+## 🔌 API Endpoints
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| `POST` | `/api/auth/register` | ❌ | Create new account |
+| `POST` | `/api/auth/login` | ❌ | Login, returns JWT |
+| `GET` | `/api/transactions` | ✅ | Fetch all transactions |
+| `POST` | `/api/transactions` | ✅ | Add a transaction |
+| `DELETE` | `/api/transactions/:id` | ✅ | Delete a transaction |
+| `GET` | `/api/budgets` | ✅ | Fetch budgets |
+| `POST` | `/api/budgets` | ✅ | Set a budget |
+| `GET` | `/api/recurring` | ✅ | Fetch recurring rules |
+| `POST` | `/api/recurring` | ✅ | Add a recurring rule |
+| `GET` | `/api/ai/insights` | ✅ | Get Gemini AI insights |
 
 ---
 
 ## 🔮 Roadmap
 
-- [x] Core expense tracking (add, delete, categorize)
-- [x] Analytics dashboard with category charts
-- [x] Rule-based AI insights engine
-- [x] Full cloud deployment (Vercel + Render + Atlas)
-- [ ] 🔐 JWT Authentication — multi-user support
-- [ ] 🤖 LLM Integration — GPT-4 / Claude for natural language insights
+- [x] JWT Authentication — multi-user support
+- [x] Gemini AI integration — natural language insights
+- [x] Budget management per category
+- [x] Recurring expense/income scheduling
+- [x] Analytics dashboard with charts
+- [ ] 📤 CSV / PDF export
 - [ ] 📈 Monthly trends & spending forecasting
-- [ ] 🔁 Recurring expense tracking
-- [ ] 📤 CSV/PDF export
+- [ ] 📱 Mobile responsive layout
 
 ---
 
@@ -198,10 +207,6 @@ B.Tech Student &nbsp;|&nbsp; Aspiring AI/ML Engineer
 
 <div align="center">
 
-### ⭐ Found this useful? Star it on GitHub!
-
-*Every star helps this project reach more developers.*
-
-[Give it a ⭐](https://github.com/soumyadip-das-dev/ai-finance-tracker)
+⭐ If you found this useful, consider starring the repo!
 
 </div>
