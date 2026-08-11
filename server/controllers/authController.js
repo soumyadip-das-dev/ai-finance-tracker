@@ -21,9 +21,6 @@ export const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // 🔍 Debug incoming data
-    console.log("REGISTER BODY:", req.body);
-
     // Validation
     if (!name || !email || !password) {
       return res.status(400).json({
@@ -66,11 +63,9 @@ export const registerUser = async (req, res) => {
     });
 
   } catch (error) {
-    // 🔥 FULL DEBUG
     console.error("❌ REGISTER ERROR:", error);
-
     res.status(500).json({
-      message: error.message, // 👈 shows real issue in Postman
+      message: "Registration failed. Please try again.",
     });
   }
 };
@@ -82,9 +77,6 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    // 🔍 Debug incoming data
-    console.log("LOGIN BODY:", req.body);
 
     // Validation
     if (!email || !password) {
@@ -120,11 +112,9 @@ export const loginUser = async (req, res) => {
     });
 
   } catch (error) {
-    // 🔥 FULL DEBUG
     console.error("❌ LOGIN ERROR:", error);
-
     res.status(500).json({
-      message: error.message,
+      message: "Login failed. Please try again.",
     });
   }
-};
+};
