@@ -58,6 +58,6 @@ Respond ONLY with a valid JSON object matching this schema:
     res.json(json);
   } catch (err) {
     console.error("Gemini error:", err);
-    res.status(500).json({ message: "AI analysis failed: " + err.message });
+    res.status(500).json({ message: "AI analysis failed. Please try again later." });
   }
 };
