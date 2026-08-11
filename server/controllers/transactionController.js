@@ -13,11 +13,9 @@ export const getTransactions = async (req, res) => {
     res.status(200).json(transactions);
 
   } catch (error) {
-
     console.error("GET ERROR:", error);
-
     res.status(500).json({
-      message: error.message,
+      message: "Failed to fetch transactions.",
     });
   }
 };
@@ -62,11 +60,9 @@ export const addTransaction = async (req, res) => {
     res.status(201).json(transaction);
 
   } catch (error) {
-
     console.error("ADD ERROR:", error);
-
     res.status(500).json({
-      message: error.message,
+      message: "Failed to add transaction.",
     });
   }
 };
@@ -103,26 +99,23 @@ export const updateTransaction = async (
       });
     }
 
-    const updated =
-      await Transaction.findByIdAndUpdate(
-        req.params.id,
-        {
-          ...req.body,
-        },
-        {
-          new: true,
-          runValidators: true,
-        }
-      );
+    // Whitelist fields to prevent mass-assignment
+    const { title, amount, category, type } = req.body;
+    const updated = await Transaction.findByIdAndUpdate(
+      req.params.id,
+      { title, amount, category, type },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
 
     res.status(200).json(updated);
 
   } catch (error) {
-
     console.error("UPDATE ERROR:", error);
-
     res.status(500).json({
-      message: error.message,
+      message: "Failed to update transaction.",
     });
   }
 };
@@ -166,11 +159,9 @@ export const deleteTransaction = async (
     });
 
   } catch (error) {
-
     console.error("DELETE ERROR:", error);
-
     res.status(500).json({
-      message: error.message,
+      message: "Failed to delete transaction.",
     });
   }
 };
