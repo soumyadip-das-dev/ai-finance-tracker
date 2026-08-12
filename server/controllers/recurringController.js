@@ -1,32 +1,43 @@
-import RecurringTransaction from "../models/RecurringTransaction.js";
-import { addDays, addWeeks, addMonths } from "date-fns";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import {
+  getRecurringService,
+  addRecurringService,
+  toggleRecurringService,
+  deleteRecurringService,
+} from "../services/recurringService.js";
 
-export const getRecurring = async (req, res) => {
-  const items = await RecurringTransaction.find({ user: req.user.id });
-  res.json(items);
-};
+/**
+ * @desc    Get user recurring transaction rules
+ * @route   GET /api/recurring
+ */
+export const getRecurring = asyncHandler(async (req, res) => {
+  const items = await getRecurringService(req.user.id);
+  res.status(200).json(items);
+});
 
-export const addRecurring = async (req, res) => {
-  try {
-    const { title, amount, type, category, frequency } = req.body;
-    const nextRunMap = { daily: addDays, weekly: addWeeks, monthly: addMonths };
-    const nextRun = nextRunMap[frequency](new Date(), 1);
-    const rec = await RecurringTransaction.create({
-      user: req.user.id, title, amount: Number(amount), type, category, frequency, nextRun
-    });
-    res.status(201).json(rec);
-  } catch (err) { res.status(500).json({ message: err.message }); }
-};
+/**
+ * @desc    Add recurring transaction rule
+ * @route   POST /api/recurring
+ */
+export const addRecurring = asyncHandler(async (req, res) => {
+  const rec = await addRecurringService(req.user.id, req.body);
+  res.status(201).json(rec);
+});
 
-export const toggleRecurring = async (req, res) => {
-  const rec = await RecurringTransaction.findOne({ _id: req.params.id, user: req.user.id });
-  if (!rec) return res.status(404).json({ message: "Not found" });
-  rec.active = !rec.active;
-  await rec.save();
-  res.json(rec);
-};
+/**
+ * @desc    Toggle recurring active status
+ * @route   PATCH /api/recurring/:id/toggle
+ */
+export const toggleRecurring = asyncHandler(async (req, res) => {
+  const rec = await toggleRecurringService(req.user.id, req.params.id);
+  res.status(200).json(rec);
+});
 
-export const deleteRecurring = async (req, res) => {
-  await RecurringTransaction.findOneAndDelete({ _id: req.params.id, user: req.user.id });
-  res.json({ message: "Deleted" });
-};
+/**
+ * @desc    Delete recurring rule
+ * @route   DELETE /api/recurring/:id
+ */
+export const deleteRecurring = asyncHandler(async (req, res) => {
+  const result = await deleteRecurringService(req.user.id, req.params.id);
+  res.status(200).json(result);
+});
