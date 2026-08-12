@@ -1,41 +1,33 @@
-import Budget from "../models/Budget.js";
-import Transaction from "../models/Transaction.js";
-import { format, startOfMonth } from "date-fns";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import {
+  setBudgetService,
+  getBudgetsService,
+  deleteBudgetService,
+} from "../services/budgetService.js";
 
-export const setBudget = async (req, res) => {
-  try {
-    const { category, limit } = req.body;
-    const month = format(new Date(), "yyyy-MM");
-    const budget = await Budget.findOneAndUpdate(
-      { user: req.user.id, category, month },
-      { limit: Number(limit) },
-      { upsert: true, new: true }
-    );
-    res.json(budget);
-  } catch (err) { res.status(500).json({ message: err.message }); }
-};
+/**
+ * @desc    Set or update budget limit for category
+ * @route   POST /api/budgets
+ */
+export const setBudget = asyncHandler(async (req, res) => {
+  const budget = await setBudgetService(req.user.id, req.body);
+  res.status(200).json(budget);
+});
 
-export const getBudgets = async (req, res) => {
-  try {
-    const month = req.query.month || format(new Date(), "yyyy-MM");
-    const budgets = await Budget.find({ user: req.user.id, month });
+/**
+ * @desc    Get user budgets enriched with spending
+ * @route   GET /api/budgets
+ */
+export const getBudgets = asyncHandler(async (req, res) => {
+  const budgets = await getBudgetsService(req.user.id, req.query.month);
+  res.status(200).json(budgets);
+});
 
-    // Enrich with spent amount per category
-    const enriched = await Promise.all(budgets.map(async (b) => {
-      const [result] = await Transaction.aggregate([
-        { $match: { user: b.user, category: b.category, type: "expense",
-          date: { $gte: startOfMonth(new Date()) } } },
-        { $group: { _id: null, spent: { $sum: "$amount" } } }
-      ]);
-      return { ...b.toObject(), spent: result?.spent || 0 };
-    }));
-    res.json(enriched);
-  } catch (err) { res.status(500).json({ message: err.message }); }
-};
-
-export const deleteBudget = async (req, res) => {
-  try {
-    await Budget.findOneAndDelete({ _id: req.params.id, user: req.user.id });
-    res.json({ message: "Budget deleted" });
-  } catch (err) { res.status(500).json({ message: err.message }); }
-};
+/**
+ * @desc    Delete budget
+ * @route   DELETE /api/budgets/:id
+ */
+export const deleteBudget = asyncHandler(async (req, res) => {
+  const result = await deleteBudgetService(req.user.id, req.params.id);
+  res.status(200).json(result);
+});
