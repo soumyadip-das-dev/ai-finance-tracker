@@ -163,6 +163,13 @@ const injectGlobalStyles = () => {
       transition: opacity 0.15s;
     }
 
+    @media (hover: none), (max-width: 768px) {
+      .tx-actions {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+    }
+
     .stat-value {
       animation: counter-in 0.5s cubic-bezier(.2,0,.1,1) both;
       font-family: ${T.fontMono};
@@ -638,7 +645,9 @@ const EditModal = ({ open, transaction, onClose, onSave }) => {
           background: T.card,
           border: `1px solid ${T.border}`,
           borderRadius: "16px",
-          minWidth: 360,
+          width: "100%",
+          maxWidth: { xs: "calc(100vw - 32px)", sm: 440 },
+          m: { xs: 2, sm: 3 },
           fontFamily: T.fontDisplay,
           backgroundImage: "none",
         },
@@ -718,8 +727,13 @@ const ConfirmDelete = ({ open, transaction, onClose, onConfirm }) => (
     TransitionComponent={Fade}
     PaperProps={{
       sx: {
-        background: T.card, border: `1px solid ${T.border}`,
-        borderRadius: "16px", minWidth: 320, backgroundImage: "none",
+        background: T.card,
+        border: `1px solid ${T.border}`,
+        borderRadius: "16px",
+        width: "100%",
+        maxWidth: { xs: "calc(100vw - 32px)", sm: 380 },
+        m: { xs: 2, sm: 3 },
+        backgroundImage: "none",
       },
     }}
   >
@@ -807,8 +821,18 @@ const Dashboard = () => {
       <Box maxWidth="1280px" mx="auto">
 
         {/* ── Page Header ── */}
-        <div className="fade-up" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 28 }}>
-          <div>
+        <Box
+          className="fade-up"
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            justifyContent: "space-between",
+            alignItems: { xs: "stretch", md: "flex-start" },
+            gap: { xs: 2.5, md: 3 },
+            mb: 3.5,
+          }}
+        >
+          <Box sx={{ flexShrink: 0 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
               <div style={{
                 width: 8, height: 8, borderRadius: "50%", background: T.accent,
@@ -819,7 +843,7 @@ const Dashboard = () => {
               </span>
             </div>
             <h1 style={{
-              margin: 0, fontSize: "1.5rem", fontWeight: 700,
+              margin: 0, fontSize: "clamp(1.25rem, 3.5vw, 1.65rem)", fontWeight: 700,
               fontFamily: T.fontDisplay, color: T.text, letterSpacing: "-0.03em",
             }}>
               Expense Tracker
@@ -827,17 +851,26 @@ const Dashboard = () => {
             <p style={{ margin: "4px 0 0", fontSize: "0.8rem", color: T.textMuted }}>
               {transactions.length} transaction{transactions.length !== 1 ? "s" : ""} tracked
             </p>
-          </div>
+          </Box>
 
-          <AddTransaction refresh={fetchData} />
-        </div>
+          <Box sx={{ flex: 1, maxWidth: { md: 660 } }}>
+            <AddTransaction refresh={fetchData} />
+          </Box>
+        </Box>
 
         {/* ── Stat Cards ── */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: 16, marginBottom: 24,
-        }}>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "1fr",
+              sm: "repeat(2, 1fr)",
+              lg: "repeat(4, 1fr)",
+            },
+            gap: { xs: 1.5, sm: 2 },
+            mb: 3,
+          }}
+        >
           {loading ? (
             [1,2,3,4].map(n => (
               <Skeleton key={n} variant="rounded" height={100}
@@ -875,16 +908,16 @@ const Dashboard = () => {
               />
             </>
           )}
-        </div>
+        </Box>
 
         {/* ── Main Grid ── */}
-        <Grid container spacing={3}>
+        <Grid container spacing={{ xs: 2, sm: 2.5, md: 3 }}>
 
           {/* LEFT COL */}
           <Grid item xs={12} lg={7}>
 
             {/* Chart Card */}
-            <div className="card-glass noise-overlay fade-up fade-up-2" style={{ padding: "24px", marginBottom: 20, position: "relative", overflow: "hidden" }}>
+            <div className="card-glass noise-overlay fade-up fade-up-2" style={{ padding: "clamp(16px, 3vw, 24px)", marginBottom: 20, position: "relative", overflow: "hidden" }}>
               <SectionHead>Spending Distribution</SectionHead>
               <Box display="flex" justifyContent="center">
                 <ExpenseChart transactions={transactions} />
@@ -892,7 +925,7 @@ const Dashboard = () => {
             </div>
 
             {/* Category Breakdown */}
-            <div className="card-glass noise-overlay fade-up fade-up-3" style={{ padding: "24px", position: "relative", overflow: "hidden" }}>
+            <div className="card-glass noise-overlay fade-up fade-up-3" style={{ padding: "clamp(16px, 3vw, 24px)", position: "relative", overflow: "hidden" }}>
               <SectionHead>Category Breakdown</SectionHead>
               {loading
                 ? [1,2,3].map(n => <Skeleton key={n} height={36} sx={{ bgcolor: "#0d1422", mb: 1, borderRadius: "8px" }} />)
@@ -918,7 +951,7 @@ const Dashboard = () => {
             </div>
 
             {/* Transactions List */}
-            <div className="card-glass noise-overlay fade-up fade-up-4" style={{ marginTop: 20, padding: "24px", position: "relative", overflow: "hidden" }}>
+            <div className="card-glass noise-overlay fade-up fade-up-4" style={{ marginTop: 20, padding: "clamp(16px, 3vw, 24px)", position: "relative", overflow: "hidden" }}>
               <SectionHead
                 right={
                   <div style={{ display: "flex", alignItems: "center", gap: 1 }}>
