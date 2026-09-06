@@ -79,7 +79,7 @@ export default function Register() {
         </div>
 
         {/* Clean Glass Card */}
-        <div className="bg-slate-900/90 backdrop-blur-2xl border border-slate-800 rounded-3xl p-7 sm:p-9 shadow-2xl shadow-black/80">
+        <div className="bg-slate-900/90 backdrop-blur-2xl border border-slate-800 rounded-3xl p-5 sm:p-8 shadow-2xl shadow-black/80">
           
           <div className="text-center mb-7">
             <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
