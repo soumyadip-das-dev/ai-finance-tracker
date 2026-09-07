@@ -124,7 +124,7 @@ flowchart TB
     SRV_AI -->|Filtered 90-day Context| GEMINI
     GEMINI -->|Structured JSON Response| SRV_AI
 
-    CRON -->|Hourly Polling (nextRun <= now)| MONGO
+    CRON -->|Hourly Polling for Due Tasks| MONGO
     CRON -->|Auto-Inserts Executed Txs| MONGO
 
     CTRL_A --> MONGO
