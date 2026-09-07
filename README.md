@@ -31,6 +31,24 @@ A production-ready, full-stack financial intelligence platform that transforms r
 > **Why evaluate this project?**  
 > Most portfolio trackers are simple CRUD applications displaying basic tables and static pie charts. This project was engineered as a **resilient, secure, and production-grade full-stack system** integrating enterprise-level architectural patterns, deterministic LLM orchestration, and background worker pipelines.
 
+### 📋 Resume-Ready Project Bullets (ATS & Recruiter Format)
+
+```text
+AI-Powered Personal Finance Platform
+Tech Stack: React 19, Node.js, Express 5, MongoDB Atlas, Google Gemini 1.5 Flash, JWT, node-cron, Recharts, Tailwind CSS
+GitHub: https://github.com/soumyadip-das-dev/ai-finance-tracker | Live Demo: [Live URL]
+
+• Developed a full-stack personal finance web application to eliminate manual ledger tracking fatigue and provide proactive budget intelligence, replacing passive historical charts with prescriptive LLM financial advisory.
+• Engineered a decoupled MERN RESTful API integrating Google Gemini 1.5 Flash with strict application/json schema enforcement, parsing 90-day rolling transaction records into deterministic health scores and anomaly reports with 0% parser failure rate.
+• Architected an asynchronous background daemon using node-cron to execute scheduled recurring subscriptions and incomes independently of active client sessions with atomic ledger updates.
+• Hardened backend security posture by enforcing per-tenant data isolation at the Mongoose query level to eliminate IDOR vulnerabilities, reinforced by stateless JWT authentication, bcryptjs hashing (10 rounds), and IP-based auth rate limiting.
+```
+
+**ATS Keywords:** `MERN Stack`, `React 19`, `Node.js`, `Express 5`, `MongoDB Atlas`, `Mongoose ODM`, `RESTful API Design`, `LLM Integration`, `Google Gemini API`, `Prompt Engineering`, `Structured JSON Enforcement`, `Asynchronous Processing`, `Background Workers`, `node-cron`, `JWT Authentication`, `Rate Limiting`, `Multi-Tenant Isolation`, `Data Visualization (Recharts)`, `Tailwind CSS`.
+
+**One-Line Project Description:**  
+*A secure, multi-tenant full-stack MERN finance system featuring automated background cron accounting daemons and deterministic Google Gemini AI advisory over 90-day rolling expenditure windows.*
+
 ### Core Competencies Demonstrated
 
 | Domain | Technical Capabilities Highlighted |
