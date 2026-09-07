@@ -25,33 +25,13 @@ A production-ready, full-stack financial intelligence platform that transforms r
 ---
 
 </div>
+## ⚡ System Overview & Engineering Highlights
 
-## 🎯 Recruiter & Technical Evaluator Snapshot
+A full-stack financial intelligence and automated ledger platform engineered with a decoupled MERN architecture, deterministic LLM orchestration, and asynchronous background worker pipelines. Built to bridge the gap between automated transaction capture, multi-tenant security hardening, and proactive fiscal telemetry.
 
-> **Why evaluate this project?**  
-> Most portfolio trackers are simple CRUD applications displaying basic tables and static pie charts. This project was engineered as a **resilient, secure, and production-grade full-stack system** integrating enterprise-level architectural patterns, deterministic LLM orchestration, and background worker pipelines.
+### Key Architectural Capabilities
 
-### 📋 Resume-Ready Project Bullets (ATS & Recruiter Format)
-
-```text
-AI-Powered Personal Finance Platform
-Tech Stack: React 19, Node.js, Express 5, MongoDB Atlas, Google Gemini 1.5 Flash, JWT, node-cron, Recharts, Tailwind CSS
-GitHub: https://github.com/soumyadip-das-dev/ai-finance-tracker | Live Demo: [Live URL]
-
-• Developed a full-stack personal finance web application to eliminate manual ledger tracking fatigue and provide proactive budget intelligence, replacing passive historical charts with prescriptive LLM financial advisory.
-• Engineered a decoupled MERN RESTful API integrating Google Gemini 1.5 Flash with strict application/json schema enforcement, parsing 90-day rolling transaction records into deterministic health scores and anomaly reports with 0% parser failure rate.
-• Architected an asynchronous background daemon using node-cron to execute scheduled recurring subscriptions and incomes independently of active client sessions with atomic ledger updates.
-• Hardened backend security posture by enforcing per-tenant data isolation at the Mongoose query level to eliminate IDOR vulnerabilities, reinforced by stateless JWT authentication, bcryptjs hashing (10 rounds), and IP-based auth rate limiting.
-```
-
-**ATS Keywords:** `MERN Stack`, `React 19`, `Node.js`, `Express 5`, `MongoDB Atlas`, `Mongoose ODM`, `RESTful API Design`, `LLM Integration`, `Google Gemini API`, `Prompt Engineering`, `Structured JSON Enforcement`, `Asynchronous Processing`, `Background Workers`, `node-cron`, `JWT Authentication`, `Rate Limiting`, `Multi-Tenant Isolation`, `Data Visualization (Recharts)`, `Tailwind CSS`.
-
-**One-Line Project Description:**  
-*A secure, multi-tenant full-stack MERN finance system featuring automated background cron accounting daemons and deterministic Google Gemini AI advisory over 90-day rolling expenditure windows.*
-
-### Core Competencies Demonstrated
-
-| Domain | Technical Capabilities Highlighted |
+| Domain | Technical Highlights & Design Patterns |
 | :--- | :--- |
 | **System Architecture** | Decoupled Client-Server MERN architecture, Layered Controller-Service pattern, Asynchronous cron worker pipelines. |
 | **Applied Generative AI** | Google Gemini 1.5 Flash integration with deterministic JSON schema enforcement (`responseMimeType: "application/json"`), zero hallucination rate, rolling window analysis. |
@@ -349,7 +329,7 @@ npm run dev
 <div align="center">
 
 **Soumyadip Das**  
-*Aspiring AI/ML & Full-Stack Software Engineer*  
+*Software Engineer | AI/ML & Full-Stack Systems*  
 
 [![GitHub](https://img.shields.io/badge/GitHub-soumyadip--das--dev-181717?style=for-the-badge&logo=github)](https://github.com/soumyadip-das-dev)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin)](https://linkedin.com)
